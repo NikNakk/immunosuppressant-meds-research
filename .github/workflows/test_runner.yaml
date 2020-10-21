@@ -24,14 +24,14 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install opensafely-cohort-extractor
-    - name: Docker Login
-      uses: azure/docker-login@v1
-      with:
-        # It seems we can't do this with the standard GITHUB_TOKEN, but
-        # have to use a personal token with the correct permissions instead
-        login-server: docker.opensafely.org
-        username: docker
-        password: ${{ secrets.OPENSAFELY_DOCKER_PASSWORD }}
+#    - name: Docker Login
+#      uses: azure/docker-login@v1
+#      with:
+#        # It seems we can't do this with the standard GITHUB_TOKEN, but
+#        # have to use a personal token with the correct permissions instead
+#        login-server: docker.opensafely.org
+#        username: docker
+#        password: ${{ secrets.OPENSAFELY_DOCKER_PASSWORD }}
 
 #    - name: Update codelists # commented out to prevent deletion of codelists not yet on opensafely site
 #      run: cohortextractor update_codelists
@@ -41,8 +41,8 @@ jobs:
     - name: Generate dummy data
       run: cohortextractor generate_cohort --expectations-population=100000
 
-    - name: Run model
-      run: docker run --mount source=${{ github.workspace }},dst=/workspace,type=bind docker.opensafely.org/stata-mp analysis/model.do
+#    - name: Run model
+#      run: docker run --mount source=${{ github.workspace }},dst=/workspace,type=bind docker.opensafely.org/stata-mp analysis/model.do
 
     - name: Create pre-release if on non-master branch
       if: github.ref != 'master'
